@@ -75,3 +75,38 @@ void Match::displayInfo() const {
     std::cout << "Матч " << id << ": Тур " << matchDay << " - "
         << getResult() << "\n";
 }
+
+// Статический метод для создания динамической копии матча с новым результатом
+Match* Match::createPlayedCopy(const Match* original, int newHomeScore, int newAwayScore) {
+    if (original == nullptr) {
+        return nullptr;
+    }
+
+    // ДИНАМИЧЕСКОЕ СОЗДАНИЕ объекта Match через new
+    Match* newMatch = new Match(
+        original->getId(),
+        original->getHomeTeamId(),
+        original->getAwayTeamId(),
+        original->getMatchDay()
+    );
+
+    // Устанавливаем новый результат
+    newMatch->playMatch(newHomeScore, newAwayScore);
+
+    return newMatch;  // Возвращаем указатель на динамический объект
+}
+
+// Статический метод для создания нового матча
+Match* Match::createNewMatch(int matchId, int homeId, int awayId, int day) {
+    // ДИНАМИЧЕСКОЕ СОЗДАНИЕ через new
+    Match* newMatch = new Match(matchId, homeId, awayId, day);
+    return newMatch;
+}
+
+// Статический метод для удаления матча
+void Match::deleteMatch(Match* match) {
+    if (match != nullptr) {
+        delete match;  // Явное удаление динамического объекта
+        // После delete указатель становится "висящим" - хорошая практика обнулять
+    }
+}
