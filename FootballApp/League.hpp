@@ -1,4 +1,4 @@
-#ifndef LEAGUE_HPP
+п»ї#ifndef LEAGUE_HPP
 #define LEAGUE_HPP
 
 #include "DataEntity.hpp"
@@ -7,12 +7,12 @@
 #include <vector>
 #include <string>
 
-// Уровни лиг для классификации
-const int LEAGUE_PREMIER = 0;   // Премьер-лига (высший уровень)
-const int LEAGUE_FIRST = 1;     // Первая лига (средний уровень)
-const int LEAGUE_SECOND = 2;    // Вторая лига (низший уровень)
+// РЈСЂРѕРІРЅРё Р»РёРі РґР»СЏ РєР»Р°СЃСЃРёС„РёРєР°С†РёРё
+const int LEAGUE_PREMIER = 0;   // РџСЂРµРјСЊРµСЂ-Р»РёРіР° (РІС‹СЃС€РёР№ СѓСЂРѕРІРµРЅСЊ)
+const int LEAGUE_FIRST = 1;     // РџРµСЂРІР°СЏ Р»РёРіР° (СЃСЂРµРґРЅРёР№ СѓСЂРѕРІРµРЅСЊ)
+const int LEAGUE_SECOND = 2;    // Р’С‚РѕСЂР°СЏ Р»РёРіР° (РЅРёР·С€РёР№ СѓСЂРѕРІРµРЅСЊ)
 
-// Класс футбольной лиги, наследуется от DataEntity
+// РљР»Р°СЃСЃ С„СѓС‚Р±РѕР»СЊРЅРѕР№ Р»РёРіРё, РЅР°СЃР»РµРґСѓРµС‚СЃСЏ РѕС‚ DataEntity
 class League : public DataEntity {
 private:
     std::string country;
@@ -27,7 +27,7 @@ public:
     League(int leagueId, const std::string& leagueName, const std::string& leagueCountry,
         const std::string& season, int leagueLevel = LEAGUE_PREMIER);
 
-    // Управление командами
+    // РЈРїСЂР°РІР»РµРЅРёРµ РєРѕРјР°РЅРґР°РјРё
     void addTeam(const std::string& name, const std::string& shortName,
         const std::string& stadium, int capacity, int founded);
     bool removeTeam(int teamId);
@@ -36,18 +36,18 @@ public:
     std::vector<Team*> getAllTeams();
     std::vector<const Team*> getAllTeams() const;
 
-    // Расписание матчей
+    // Р Р°СЃРїРёСЃР°РЅРёРµ РјР°С‚С‡РµР№
     void generateSchedule();
     void addMatchResult(int homeTeamId, int awayTeamId, int homeGoals, int awayGoals, int matchDay);
     std::vector<Match*> getTeamMatches(int teamId);
     std::vector<Match*> getPlayedMatches();
 
-    // Турнирная таблица
+    // РўСѓСЂРЅРёСЂРЅР°СЏ С‚Р°Р±Р»РёС†Р°
     std::vector<Team*> getStandings();
     std::vector<const Team*> getStandings() const;
     void displayStandings() const;
 
-    // Статистика
+    // РЎС‚Р°С‚РёСЃС‚РёРєР°
     void displayLeagueStats() const;
     void displayTeamStats(int teamId) const;
     Team* getTopScorer();
@@ -58,17 +58,17 @@ public:
     int getTotalMatchesPlayed() const;
     int getTotalGoals() const;
 
-    // Геттеры
+    // Р“РµС‚С‚РµСЂС‹
     std::string getCountry() const;
     std::string getCurrentSeason() const;
     int getLevel() const;
     int getTeamsCount() const;
     int getMaxMatchDay() const;
 
-    // Виртуальные методы
+    // Р’РёСЂС‚СѓР°Р»СЊРЅС‹Рµ РјРµС‚РѕРґС‹
     void displayInfo() const override;
 
-    // Работа с файлами
+    // Р Р°Р±РѕС‚Р° СЃ С„Р°Р№Р»Р°РјРё
     void saveMatchesToFile();
     void loadMatchesFromFile();
     void saveTeamsToFile();

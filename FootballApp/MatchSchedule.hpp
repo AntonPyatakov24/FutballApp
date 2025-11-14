@@ -1,49 +1,49 @@
-#ifndef MATCHSCHEDULE_HPP
+п»ї#ifndef MATCHSCHEDULE_HPP
 #define MATCHSCHEDULE_HPP
 
 #include "Match.hpp"
 #include <vector>
 
-// Фильтры для отбора матчей
-const int FILTER_ALL = 0;       // Все матчи
-const int FILTER_UPCOMING = 1;  // Предстоящие матчи
-const int FILTER_PLAYED = 2;    // Сыгранные матчи
+// Р¤РёР»СЊС‚СЂС‹ РґР»СЏ РѕС‚Р±РѕСЂР° РјР°С‚С‡РµР№
+const int FILTER_ALL = 0;       // Р’СЃРµ РјР°С‚С‡Рё
+const int FILTER_UPCOMING = 1;  // РџСЂРµРґСЃС‚РѕСЏС‰РёРµ РјР°С‚С‡Рё
+const int FILTER_PLAYED = 2;    // РЎС‹РіСЂР°РЅРЅС‹Рµ РјР°С‚С‡Рё
 
-// Класс для управления расписанием матчей
-// Содержит методы для работы с коллекцией матчей
+// РљР»Р°СЃСЃ РґР»СЏ СѓРїСЂР°РІР»РµРЅРёСЏ СЂР°СЃРїРёСЃР°РЅРёРµРј РјР°С‚С‡РµР№
+// РЎРѕРґРµСЂР¶РёС‚ РјРµС‚РѕРґС‹ РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ РєРѕР»Р»РµРєС†РёРµР№ РјР°С‚С‡РµР№
 class MatchSchedule {
 private:
-    std::vector<Match> matches;  // Вектор всех матчей
-    int nextMatchId;             // Следующий доступный ID матча
+    std::vector<Match> matches;  // Р’РµРєС‚РѕСЂ РІСЃРµС… РјР°С‚С‡РµР№
+    int nextMatchId;             // РЎР»РµРґСѓСЋС‰РёР№ РґРѕСЃС‚СѓРїРЅС‹Р№ ID РјР°С‚С‡Р°
 
 public:
     MatchSchedule();
 
-    // Добавляет матч в расписание
+    // Р”РѕР±Р°РІР»СЏРµС‚ РјР°С‚С‡ РІ СЂР°СЃРїРёСЃР°РЅРёРµ
     void addMatch(int homeTeamId, int awayTeamId, int matchDay);
 
-    // Удаляет матч из расписания
+    // РЈРґР°Р»СЏРµС‚ РјР°С‚С‡ РёР· СЂР°СЃРїРёСЃР°РЅРёСЏ
     bool removeMatch(int matchId);
 
-    // Находит матч по ID
+    // РќР°С…РѕРґРёС‚ РјР°С‚С‡ РїРѕ ID
     Match* findMatch(int matchId);
 
-    // Возвращает матчи указанной команды
+    // Р’РѕР·РІСЂР°С‰Р°РµС‚ РјР°С‚С‡Рё СѓРєР°Р·Р°РЅРЅРѕР№ РєРѕРјР°РЅРґС‹
     std::vector<Match*> getMatchesByTeam(int teamId);
 
-    // Возвращает матчи указанного дня
+    // Р’РѕР·РІСЂР°С‰Р°РµС‚ РјР°С‚С‡Рё СѓРєР°Р·Р°РЅРЅРѕРіРѕ РґРЅСЏ
     std::vector<Match*> getMatchesByDay(int matchDay);
 
-    // Возвращает матчи по фильтру
+    // Р’РѕР·РІСЂР°С‰Р°РµС‚ РјР°С‚С‡Рё РїРѕ С„РёР»СЊС‚СЂСѓ
     std::vector<Match*> getMatchesByFilter(int filter);
 
-    // Возвращает все матчи
+    // Р’РѕР·РІСЂР°С‰Р°РµС‚ РІСЃРµ РјР°С‚С‡Рё
     std::vector<Match*> getAllMatches();
 
-    // Отображает полное расписание
+    // РћС‚РѕР±СЂР°Р¶Р°РµС‚ РїРѕР»РЅРѕРµ СЂР°СЃРїРёСЃР°РЅРёРµ
     void displaySchedule() const;
 
-    // Отображает расписание конкретной команды
+    // РћС‚РѕР±СЂР°Р¶Р°РµС‚ СЂР°СЃРїРёСЃР°РЅРёРµ РєРѕРЅРєСЂРµС‚РЅРѕР№ РєРѕРјР°РЅРґС‹
     void displayTeamSchedule(int teamId) const;
 };
 

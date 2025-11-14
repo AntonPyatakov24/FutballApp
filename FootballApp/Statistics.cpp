@@ -1,21 +1,21 @@
-#include "Statistics.hpp"
+п»ї#include "Statistics.hpp"
 #include <iostream>
 #include <algorithm>
 
-// Конструктор по умолчанию
+// РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ
 Statistics::Statistics() {}
 
-// Добавляет команду в коллекцию для статистического анализа
+// Р”РѕР±Р°РІР»СЏРµС‚ РєРѕРјР°РЅРґСѓ РІ РєРѕР»Р»РµРєС†РёСЋ РґР»СЏ СЃС‚Р°С‚РёСЃС‚РёС‡РµСЃРєРѕРіРѕ Р°РЅР°Р»РёР·Р°
 void Statistics::addTeam(const Team& team) {
     teams.push_back(team);
 }
 
-// Добавляет матч в коллекцию для статистического анализа
+// Р”РѕР±Р°РІР»СЏРµС‚ РјР°С‚С‡ РІ РєРѕР»Р»РµРєС†РёСЋ РґР»СЏ СЃС‚Р°С‚РёСЃС‚РёС‡РµСЃРєРѕРіРѕ Р°РЅР°Р»РёР·Р°
 void Statistics::addMatch(const Match& match) {
     matches.push_back(match);
 }
 
-// Находит команду с наибольшим количеством забитых голов
+// РќР°С…РѕРґРёС‚ РєРѕРјР°РЅРґСѓ СЃ РЅР°РёР±РѕР»СЊС€РёРј РєРѕР»РёС‡РµСЃС‚РІРѕРј Р·Р°Р±РёС‚С‹С… РіРѕР»РѕРІ
 Team* Statistics::getTopScorer() {
     if (teams.empty()) return nullptr;
 
@@ -28,7 +28,7 @@ Team* Statistics::getTopScorer() {
     return topScorer;
 }
 
-// Находит команду с наименьшим количеством пропущенных голов
+// РќР°С…РѕРґРёС‚ РєРѕРјР°РЅРґСѓ СЃ РЅР°РёРјРµРЅСЊС€РёРј РєРѕР»РёС‡РµСЃС‚РІРѕРј РїСЂРѕРїСѓС‰РµРЅРЅС‹С… РіРѕР»РѕРІ
 Team* Statistics::getBestDefense() {
     if (teams.empty()) return nullptr;
 
@@ -41,7 +41,7 @@ Team* Statistics::getBestDefense() {
     return bestDefense;
 }
 
-// Находит матч с наибольшим общим количеством голов
+// РќР°С…РѕРґРёС‚ РјР°С‚С‡ СЃ РЅР°РёР±РѕР»СЊС€РёРј РѕР±С‰РёРј РєРѕР»РёС‡РµСЃС‚РІРѕРј РіРѕР»РѕРІ
 Match* Statistics::getHighestScoringMatch() {
     if (matches.empty()) return nullptr;
 
@@ -58,7 +58,7 @@ Match* Statistics::getHighestScoringMatch() {
     return highestScoring;
 }
 
-// Вычисляет среднее количество голов за матч
+// Р’С‹С‡РёСЃР»СЏРµС‚ СЃСЂРµРґРЅРµРµ РєРѕР»РёС‡РµСЃС‚РІРѕ РіРѕР»РѕРІ Р·Р° РјР°С‚С‡
 double Statistics::getAverageGoalsPerGame() const {
     if (matches.empty()) return 0.0;
 
@@ -75,20 +75,20 @@ double Statistics::getAverageGoalsPerGame() const {
     return playedMatches > 0 ? static_cast<double>(totalGoals) / playedMatches : 0.0;
 }
 
-// Отображает общую статистику лиги
+// РћС‚РѕР±СЂР°Р¶Р°РµС‚ РѕР±С‰СѓСЋ СЃС‚Р°С‚РёСЃС‚РёРєСѓ Р»РёРіРё
 void Statistics::displayLeagueStats() const {
-    std::cout << "\n=== СТАТИСТИКА ЛИГИ ===\n";
+    std::cout << "\n=== РЎРўРђРўРРЎРўРРљРђ Р›РР“Р ===\n";
 
     if (teams.empty()) {
-        std::cout << "Нет данных о командах.\n";
+        std::cout << "РќРµС‚ РґР°РЅРЅС‹С… Рѕ РєРѕРјР°РЅРґР°С….\n";
         return;
     }
 
-    // Основная статистика
-    std::cout << "Общее количество команд: " << teams.size() << "\n";
-    std::cout << "Среднее количество голов за матч: " << getAverageGoalsPerGame() << "\n";
+    // РћСЃРЅРѕРІРЅР°СЏ СЃС‚Р°С‚РёСЃС‚РёРєР°
+    std::cout << "РћР±С‰РµРµ РєРѕР»РёС‡РµСЃС‚РІРѕ РєРѕРјР°РЅРґ: " << teams.size() << "\n";
+    std::cout << "РЎСЂРµРґРЅРµРµ РєРѕР»РёС‡РµСЃС‚РІРѕ РіРѕР»РѕРІ Р·Р° РјР°С‚С‡: " << getAverageGoalsPerGame() << "\n";
 
-    // Статистика по матчам
+    // РЎС‚Р°С‚РёСЃС‚РёРєР° РїРѕ РјР°С‚С‡Р°Рј
     if (!matches.empty()) {
         int playedMatches = 0;
         int postponedMatches = 0;
@@ -98,38 +98,38 @@ void Statistics::displayLeagueStats() const {
             else if (match.getStatus() == MATCH_POSTPONED) postponedMatches++;
         }
 
-        std::cout << "\n--- СТАТИСТИКА МАТЧЕЙ ---\n";
-        std::cout << "Всего матчей: " << matches.size() << "\n";
-        std::cout << "Сыграно: " << playedMatches << "\n";
-        std::cout << "Запланировано: " << matches.size() - playedMatches - postponedMatches << "\n";
-        std::cout << "Перенесено: " << postponedMatches << "\n";
+        std::cout << "\n--- РЎРўРђРўРРЎРўРРљРђ РњРђРўР§Р•Р™ ---\n";
+        std::cout << "Р’СЃРµРіРѕ РјР°С‚С‡РµР№: " << matches.size() << "\n";
+        std::cout << "РЎС‹РіСЂР°РЅРѕ: " << playedMatches << "\n";
+        std::cout << "Р—Р°РїР»Р°РЅРёСЂРѕРІР°РЅРѕ: " << matches.size() - playedMatches - postponedMatches << "\n";
+        std::cout << "РџРµСЂРµРЅРµСЃРµРЅРѕ: " << postponedMatches << "\n";
     }
 }
 
-// Отображает детальную статистику команды
+// РћС‚РѕР±СЂР°Р¶Р°РµС‚ РґРµС‚Р°Р»СЊРЅСѓСЋ СЃС‚Р°С‚РёСЃС‚РёРєСѓ РєРѕРјР°РЅРґС‹
 void Statistics::displayTeamStats(int teamId) const {
     auto teamIt = std::find_if(teams.begin(), teams.end(),
         [teamId](const Team& team) { return team.getId() == teamId; });
 
     if (teamIt == teams.end()) {
-        std::cout << "Команда с ID " << teamId << " не найдена.\n";
+        std::cout << "РљРѕРјР°РЅРґР° СЃ ID " << teamId << " РЅРµ РЅР°Р№РґРµРЅР°.\n";
         return;
     }
 
     const Team& team = *teamIt;
 
-    std::cout << "\n=== СТАТИСТИКА КОМАНДЫ " << team.getName() << " ===\n";
-    std::cout << "Сыграно матчей: " << team.getGamesPlayed() << "\n";
-    std::cout << "Победы/Ничьи/Поражения: " << team.getWins() << "/"
+    std::cout << "\n=== РЎРўРђРўРРЎРўРРљРђ РљРћРњРђРќР”Р« " << team.getName() << " ===\n";
+    std::cout << "РЎС‹РіСЂР°РЅРѕ РјР°С‚С‡РµР№: " << team.getGamesPlayed() << "\n";
+    std::cout << "РџРѕР±РµРґС‹/РќРёС‡СЊРё/РџРѕСЂР°Р¶РµРЅРёСЏ: " << team.getWins() << "/"
         << team.getDraws() << "/" << team.getLosses() << "\n";
-    std::cout << "Забито/Пропущено: " << team.getGoalsFor() << "/"
+    std::cout << "Р—Р°Р±РёС‚Рѕ/РџСЂРѕРїСѓС‰РµРЅРѕ: " << team.getGoalsFor() << "/"
         << team.getGoalsAgainst() << "\n";
-    std::cout << "Разница мячей: " << team.getGoalDifference() << "\n";
-    std::cout << "Очки: " << team.getPoints() << "\n";
+    std::cout << "Р Р°Р·РЅРёС†Р° РјСЏС‡РµР№: " << team.getGoalDifference() << "\n";
+    std::cout << "РћС‡РєРё: " << team.getPoints() << "\n";
 
-    // Вычисляем процент побед
+    // Р’С‹С‡РёСЃР»СЏРµРј РїСЂРѕС†РµРЅС‚ РїРѕР±РµРґ
     if (team.getGamesPlayed() > 0) {
         double winPercentage = (static_cast<double>(team.getWins()) / team.getGamesPlayed()) * 100;
-        std::cout << "Процент побед: " << winPercentage << "%\n";
+        std::cout << "РџСЂРѕС†РµРЅС‚ РїРѕР±РµРґ: " << winPercentage << "%\n";
     }
 }

@@ -1,11 +1,11 @@
-#include "League.hpp"
+п»ї#include "League.hpp"
 #include <iostream>
 #include <algorithm>
 #include <fstream>
 #include <sstream>
 #include <iomanip>
 
-// Конструктор
+// РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ
 League::League(int leagueId, const std::string& leagueName, const std::string& leagueCountry,
     const std::string& season, int leagueLevel)
     : DataEntity(leagueId, leagueName),
@@ -16,14 +16,14 @@ League::League(int leagueId, const std::string& leagueName, const std::string& l
     nextMatchId(1) {
 }
 
-// Добавление команды
+// Р”РѕР±Р°РІР»РµРЅРёРµ РєРѕРјР°РЅРґС‹
 void League::addTeam(const std::string& teamName, const std::string& shortName,
     const std::string& stadium, int capacity, int founded) {
     Team newTeam(nextTeamId++, teamName, shortName, stadium, capacity, founded);
     teams.push_back(newTeam);
 }
 
-// Удаление команды
+// РЈРґР°Р»РµРЅРёРµ РєРѕРјР°РЅРґС‹
 bool League::removeTeam(int teamId) {
     auto it = std::remove_if(teams.begin(), teams.end(),
         [teamId](const Team& team) { return team.getId() == teamId; });
@@ -31,7 +31,7 @@ bool League::removeTeam(int teamId) {
     if (it != teams.end()) {
         teams.erase(it, teams.end());
 
-        // Удаляем матчи с участием команды
+        // РЈРґР°Р»СЏРµРј РјР°С‚С‡Рё СЃ СѓС‡Р°СЃС‚РёРµРј РєРѕРјР°РЅРґС‹
         auto matchIt = std::remove_if(matches.begin(), matches.end(),
             [teamId](const Match& match) { return match.involvesTeam(teamId); });
         matches.erase(matchIt, matches.end());
@@ -42,7 +42,7 @@ bool League::removeTeam(int teamId) {
     return false;
 }
 
-// Поиск команды по ID
+// РџРѕРёСЃРє РєРѕРјР°РЅРґС‹ РїРѕ ID
 Team* League::findTeamById(int id) {
     for (auto& team : teams) {
         if (team.getId() == id) {
@@ -61,7 +61,7 @@ const Team* League::findTeamById(int id) const {
     return nullptr;
 }
 
-// Получение всех команд
+// РџРѕР»СѓС‡РµРЅРёРµ РІСЃРµС… РєРѕРјР°РЅРґ
 std::vector<Team*> League::getAllTeams() {
     std::vector<Team*> teamPtrs;
     for (auto& team : teams) {
@@ -78,7 +78,7 @@ std::vector<const Team*> League::getAllTeams() const {
     return teamPtrs;
 }
 
-// Генерация расписания
+// Р“РµРЅРµСЂР°С†РёСЏ СЂР°СЃРїРёСЃР°РЅРёСЏ
 void League::generateSchedule() {
     matches.clear();
     int totalTeams = static_cast<int>(teams.size());
@@ -92,7 +92,7 @@ void League::generateSchedule() {
         teamIds.push_back(team.getId());
     }
 
-    // Первый круг
+    // РџРµСЂРІС‹Р№ РєСЂСѓРі
     for (int round = 1; round <= totalTeams - 1; round++) {
         for (int i = 0; i < totalTeams / 2; i++) {
             int homeIdx = i;
@@ -105,7 +105,7 @@ void League::generateSchedule() {
             matches.push_back(Match(matchId++, teamIds[homeIdx], teamIds[awayIdx], round));
         }
 
-        // Циклический сдвиг
+        // Р¦РёРєР»РёС‡РµСЃРєРёР№ СЃРґРІРёРі
         int firstTeamId = teamIds[0];
         for (int i = 0; i < totalTeams - 1; i++) {
             teamIds[i] = teamIds[i + 1];
@@ -113,7 +113,7 @@ void League::generateSchedule() {
         teamIds[totalTeams - 1] = firstTeamId;
     }
 
-    // Второй круг
+    // Р’С‚РѕСЂРѕР№ РєСЂСѓРі
     for (int round = totalTeams; round <= totalRounds; round++) {
         int firstRoundMatch = round - totalTeams + 1;
 
@@ -127,11 +127,11 @@ void League::generateSchedule() {
     nextMatchId = matchId;
 }
 
-// Добавление результата матча
+// Р”РѕР±Р°РІР»РµРЅРёРµ СЂРµР·СѓР»СЊС‚Р°С‚Р° РјР°С‚С‡Р°
 void League::addMatchResult(int homeTeamId, int awayTeamId, int homeGoals, int awayGoals, int matchDay) {
     int maxMatchDay = getMaxMatchDay();
     if (matchDay < 1 || matchDay > maxMatchDay) {
-        std::cout << "Ошибка: номер тура должен быть от 1 до " << maxMatchDay << "\n";
+        std::cout << "РћС€РёР±РєР°: РЅРѕРјРµСЂ С‚СѓСЂР° РґРѕР»Р¶РµРЅ Р±С‹С‚СЊ РѕС‚ 1 РґРѕ " << maxMatchDay << "\n";
         return;
     }
 
@@ -176,10 +176,10 @@ void League::addMatchResult(int homeTeamId, int awayTeamId, int homeGoals, int a
         }
     }
 
-    std::cout << "Матч добавлен и статистика обновлена!\n";
+    std::cout << "РњР°С‚С‡ РґРѕР±Р°РІР»РµРЅ Рё СЃС‚Р°С‚РёСЃС‚РёРєР° РѕР±РЅРѕРІР»РµРЅР°!\n";
 }
 
-// Получение матчей команды
+// РџРѕР»СѓС‡РµРЅРёРµ РјР°С‚С‡РµР№ РєРѕРјР°РЅРґС‹
 std::vector<Match*> League::getTeamMatches(int teamId) {
     std::vector<Match*> teamMatches;
     for (auto& match : matches) {
@@ -190,7 +190,7 @@ std::vector<Match*> League::getTeamMatches(int teamId) {
     return teamMatches;
 }
 
-// Получение сыгранных матчей
+// РџРѕР»СѓС‡РµРЅРёРµ СЃС‹РіСЂР°РЅРЅС‹С… РјР°С‚С‡РµР№
 std::vector<Match*> League::getPlayedMatches() {
     std::vector<Match*> played;
     for (auto& match : matches) {
@@ -201,7 +201,7 @@ std::vector<Match*> League::getPlayedMatches() {
     return played;
 }
 
-// Турнирная таблица
+// РўСѓСЂРЅРёСЂРЅР°СЏ С‚Р°Р±Р»РёС†Р°
 std::vector<Team*> League::getStandings() {
     updateTeamStats();
     std::vector<Team*> standings = getAllTeams();
@@ -220,14 +220,14 @@ std::vector<Team*> League::getStandings() {
 }
 
 std::vector<const Team*> League::getStandings() const {
-    // Создаем неконстантную копию для обновления статистики
+    // РЎРѕР·РґР°РµРј РЅРµРєРѕРЅСЃС‚Р°РЅС‚РЅСѓСЋ РєРѕРїРёСЋ РґР»СЏ РѕР±РЅРѕРІР»РµРЅРёСЏ СЃС‚Р°С‚РёСЃС‚РёРєРё
     League* nonConstThis = const_cast<League*>(this);
     nonConstThis->updateTeamStats();
 
     std::vector<const Team*> constStandings;
     auto allTeams = getAllTeams();
 
-    // Создаем временный вектор для сортировки
+    // РЎРѕР·РґР°РµРј РІСЂРµРјРµРЅРЅС‹Р№ РІРµРєС‚РѕСЂ РґР»СЏ СЃРѕСЂС‚РёСЂРѕРІРєРё
     std::vector<Team*> tempStandings;
     for (auto team : allTeams) {
         tempStandings.push_back(const_cast<Team*>(team));
@@ -244,7 +244,7 @@ std::vector<const Team*> League::getStandings() const {
             return a->getGoalsFor() > b->getGoalsFor();
         });
 
-    // Конвертируем обратно в const
+    // РљРѕРЅРІРµСЂС‚РёСЂСѓРµРј РѕР±СЂР°С‚РЅРѕ РІ const
     for (auto team : tempStandings) {
         constStandings.push_back(team);
     }
@@ -252,13 +252,13 @@ std::vector<const Team*> League::getStandings() const {
     return constStandings;
 }
 
-// Отображение таблицы
+// РћС‚РѕР±СЂР°Р¶РµРЅРёРµ С‚Р°Р±Р»РёС†С‹
 void League::displayStandings() const {
     auto standings = getStandings();
 
-    std::cout << "\n=== ТУРНИРНАЯ ТАБЛИЦА " << name << " ===\n";
+    std::cout << "\n=== РўРЈР РќРР РќРђРЇ РўРђР‘Р›РР¦Рђ " << name << " ===\n";
     std::cout << "------------------------------------------------------------\n";
-    std::cout << "№  Команда            И   В   Н   П   ГЗ   ГП   РМ   О\n";
+    std::cout << "в„–  РљРѕРјР°РЅРґР°            Р   Р’   Рќ   Рџ   Р“Р—   Р“Рџ   Р Рњ   Рћ\n";
     std::cout << "------------------------------------------------------------\n";
 
     int position = 1;
@@ -271,67 +271,67 @@ void League::displayStandings() const {
     std::cout << "------------------------------------------------------------\n";
 }
 
-// Статистика лиги
+// РЎС‚Р°С‚РёСЃС‚РёРєР° Р»РёРіРё
 void League::displayLeagueStats() const {
-    std::cout << "\n=== СТАТИСТИКА ЛИГИ " << name << " ===\n";
+    std::cout << "\n=== РЎРўРђРўРРЎРўРРљРђ Р›РР“Р " << name << " ===\n";
     std::cout << "============================================\n";
 
     int totalMatches = getTotalMatchesPlayed();
     int totalGoals = getTotalGoals();
     double avgGoals = getAverageGoalsPerGame();
 
-    std::cout << "Общее количество матчей: " << totalMatches << "\n";
-    std::cout << "Общее количество голов: " << totalGoals << "\n";
-    std::cout << "Среднее количество голов за матч: " << std::fixed << std::setprecision(2) << avgGoals << "\n";
+    std::cout << "РћР±С‰РµРµ РєРѕР»РёС‡РµСЃС‚РІРѕ РјР°С‚С‡РµР№: " << totalMatches << "\n";
+    std::cout << "РћР±С‰РµРµ РєРѕР»РёС‡РµСЃС‚РІРѕ РіРѕР»РѕРІ: " << totalGoals << "\n";
+    std::cout << "РЎСЂРµРґРЅРµРµ РєРѕР»РёС‡РµСЃС‚РІРѕ РіРѕР»РѕРІ Р·Р° РјР°С‚С‡: " << std::fixed << std::setprecision(2) << avgGoals << "\n";
 
     const Team* topScorer = getTopScorer();
     const Team* bestDefense = getBestDefense();
 
     if (topScorer) {
-        std::cout << "Лучшая атака: " << topScorer->getName()
-            << " (" << topScorer->getGoalsFor() << " голов)\n";
+        std::cout << "Р›СѓС‡С€Р°СЏ Р°С‚Р°РєР°: " << topScorer->getName()
+            << " (" << topScorer->getGoalsFor() << " РіРѕР»РѕРІ)\n";
     }
 
     if (bestDefense) {
-        std::cout << "Лучшая защита: " << bestDefense->getName()
-            << " (" << bestDefense->getGoalsAgainst() << " пропущенных)\n";
+        std::cout << "Р›СѓС‡С€Р°СЏ Р·Р°С‰РёС‚Р°: " << bestDefense->getName()
+            << " (" << bestDefense->getGoalsAgainst() << " РїСЂРѕРїСѓС‰РµРЅРЅС‹С…)\n";
     }
 
-    std::cout << "Количество команд: " << teams.size() << "\n";
-    std::cout << "Всего туров в сезоне: " << getMaxMatchDay() << "\n";
+    std::cout << "РљРѕР»РёС‡РµСЃС‚РІРѕ РєРѕРјР°РЅРґ: " << teams.size() << "\n";
+    std::cout << "Р’СЃРµРіРѕ С‚СѓСЂРѕРІ РІ СЃРµР·РѕРЅРµ: " << getMaxMatchDay() << "\n";
     std::cout << "============================================\n";
 }
 
-// Статистика команды
+// РЎС‚Р°С‚РёСЃС‚РёРєР° РєРѕРјР°РЅРґС‹
 void League::displayTeamStats(int teamId) const {
     const Team* team = findTeamById(teamId);
     if (!team) {
-        std::cout << "Команда не найдена!\n";
+        std::cout << "РљРѕРјР°РЅРґР° РЅРµ РЅР°Р№РґРµРЅР°!\n";
         return;
     }
 
-    std::cout << "\n=== СТАТИСТИКА КОМАНДЫ " << team->getName() << " ===\n";
+    std::cout << "\n=== РЎРўРђРўРРЎРўРРљРђ РљРћРњРђРќР”Р« " << team->getName() << " ===\n";
     std::cout << "----------------------------------------\n";
 
     team->displayInfo();
 
-    std::cout << "\nТУРНИРНАЯ СТАТИСТИКА:\n";
-    std::cout << "Сыграно матчей: " << team->getGamesPlayed() << "\n";
-    std::cout << "Победы/Ничьи/Поражения: " << team->getWins() << "/"
+    std::cout << "\nРўРЈР РќРР РќРђРЇ РЎРўРђРўРРЎРўРРљРђ:\n";
+    std::cout << "РЎС‹РіСЂР°РЅРѕ РјР°С‚С‡РµР№: " << team->getGamesPlayed() << "\n";
+    std::cout << "РџРѕР±РµРґС‹/РќРёС‡СЊРё/РџРѕСЂР°Р¶РµРЅРёСЏ: " << team->getWins() << "/"
         << team->getDraws() << "/" << team->getLosses() << "\n";
-    std::cout << "Забито голов: " << team->getGoalsFor() << "\n";
-    std::cout << "Пропущено голов: " << team->getGoalsAgainst() << "\n";
-    std::cout << "Разница голов: " << team->getGoalDifference() << "\n";
-    std::cout << "Очки: " << team->getPoints() << "\n";
+    std::cout << "Р—Р°Р±РёС‚Рѕ РіРѕР»РѕРІ: " << team->getGoalsFor() << "\n";
+    std::cout << "РџСЂРѕРїСѓС‰РµРЅРѕ РіРѕР»РѕРІ: " << team->getGoalsAgainst() << "\n";
+    std::cout << "Р Р°Р·РЅРёС†Р° РіРѕР»РѕРІ: " << team->getGoalDifference() << "\n";
+    std::cout << "РћС‡РєРё: " << team->getPoints() << "\n";
 
     double winPercentage = (team->getGamesPlayed() > 0) ?
         (static_cast<double>(team->getWins()) / team->getGamesPlayed() * 100) : 0;
 
-    std::cout << "Процент побед: " << std::fixed << std::setprecision(1) << winPercentage << "%\n";
+    std::cout << "РџСЂРѕС†РµРЅС‚ РїРѕР±РµРґ: " << std::fixed << std::setprecision(1) << winPercentage << "%\n";
     std::cout << "----------------------------------------\n";
 }
 
-// Лучшая атака
+// Р›СѓС‡С€Р°СЏ Р°С‚Р°РєР°
 Team* League::getTopScorer() {
     auto allTeams = getAllTeams();
     if (allTeams.empty()) return nullptr;
@@ -358,7 +358,7 @@ const Team* League::getTopScorer() const {
     return topScorer;
 }
 
-// Лучшая защита
+// Р›СѓС‡С€Р°СЏ Р·Р°С‰РёС‚Р°
 Team* League::getBestDefense() {
     auto allTeams = getAllTeams();
     if (allTeams.empty()) return nullptr;
@@ -385,14 +385,14 @@ const Team* League::getBestDefense() const {
     return bestDefense;
 }
 
-// Среднее количество голов
+// РЎСЂРµРґРЅРµРµ РєРѕР»РёС‡РµСЃС‚РІРѕ РіРѕР»РѕРІ
 double League::getAverageGoalsPerGame() const {
     int totalMatches = getTotalMatchesPlayed();
     if (totalMatches == 0) return 0.0;
     return static_cast<double>(getTotalGoals()) / totalMatches;
 }
 
-// Количество сыгранных матчей
+// РљРѕР»РёС‡РµСЃС‚РІРѕ СЃС‹РіСЂР°РЅРЅС‹С… РјР°С‚С‡РµР№
 int League::getTotalMatchesPlayed() const {
     int count = 0;
     for (const auto& match : matches) {
@@ -403,7 +403,7 @@ int League::getTotalMatchesPlayed() const {
     return count;
 }
 
-// Общее количество голов
+// РћР±С‰РµРµ РєРѕР»РёС‡РµСЃС‚РІРѕ РіРѕР»РѕРІ
 int League::getTotalGoals() const {
     int total = 0;
     for (const auto& match : matches) {
@@ -414,39 +414,39 @@ int League::getTotalGoals() const {
     return total;
 }
 
-// Максимальное количество туров
+// РњР°РєСЃРёРјР°Р»СЊРЅРѕРµ РєРѕР»РёС‡РµСЃС‚РІРѕ С‚СѓСЂРѕРІ
 int League::getMaxMatchDay() const {
     if (teams.size() < 2) return 0;
     return static_cast<int>((teams.size() - 1) * 2);
 }
 
-// Геттеры
+// Р“РµС‚С‚РµСЂС‹
 std::string League::getCountry() const { return country; }
 std::string League::getCurrentSeason() const { return currentSeason; }
 int League::getLevel() const { return level; }
 int League::getTeamsCount() const { return static_cast<int>(teams.size()); }
 
-// Информация о лиге
+// РРЅС„РѕСЂРјР°С†РёСЏ Рѕ Р»РёРіРµ
 void League::displayInfo() const {
     std::cout << "\n=== " << name << " ===\n";
-    std::cout << "Страна: " << country << "\n";
-    std::cout << "Сезон: " << currentSeason << "\n";
+    std::cout << "РЎС‚СЂР°РЅР°: " << country << "\n";
+    std::cout << "РЎРµР·РѕРЅ: " << currentSeason << "\n";
 
     std::string levelStr;
     switch (level) {
-    case LEAGUE_PREMIER: levelStr = "Премьер-лига"; break;
-    case LEAGUE_FIRST: levelStr = "Первая лига"; break;
-    case LEAGUE_SECOND: levelStr = "Вторая лига"; break;
-    default: levelStr = "Неизвестный уровень";
+    case LEAGUE_PREMIER: levelStr = "РџСЂРµРјСЊРµСЂ-Р»РёРіР°"; break;
+    case LEAGUE_FIRST: levelStr = "РџРµСЂРІР°СЏ Р»РёРіР°"; break;
+    case LEAGUE_SECOND: levelStr = "Р’С‚РѕСЂР°СЏ Р»РёРіР°"; break;
+    default: levelStr = "РќРµРёР·РІРµСЃС‚РЅС‹Р№ СѓСЂРѕРІРµРЅСЊ";
     }
-    std::cout << "Уровень: " << levelStr << "\n";
+    std::cout << "РЈСЂРѕРІРµРЅСЊ: " << levelStr << "\n";
 
-    std::cout << "Количество команд: " << teams.size() << "\n";
-    std::cout << "Количество матчей: " << matches.size() << "\n";
-    std::cout << "Сыграно матчей: " << getTotalMatchesPlayed() << "\n";
+    std::cout << "РљРѕР»РёС‡РµСЃС‚РІРѕ РєРѕРјР°РЅРґ: " << teams.size() << "\n";
+    std::cout << "РљРѕР»РёС‡РµСЃС‚РІРѕ РјР°С‚С‡РµР№: " << matches.size() << "\n";
+    std::cout << "РЎС‹РіСЂР°РЅРѕ РјР°С‚С‡РµР№: " << getTotalMatchesPlayed() << "\n";
 }
 
-// Обновление статистики
+// РћР±РЅРѕРІР»РµРЅРёРµ СЃС‚Р°С‚РёСЃС‚РёРєРё
 void League::updateTeamStats() {
     for (auto& team : teams) {
         team.resetStats();
@@ -470,11 +470,11 @@ void League::updateTeamStats() {
     }
 }
 
-// Сохранение матчей
+// РЎРѕС…СЂР°РЅРµРЅРёРµ РјР°С‚С‡РµР№
 void League::saveMatchesToFile() {
     std::ofstream file("matches.txt");
     if (!file.is_open()) {
-        std::cout << "Ошибка: не удалось создать файл matches.txt\n";
+        std::cout << "РћС€РёР±РєР°: РЅРµ СѓРґР°Р»РѕСЃСЊ СЃРѕР·РґР°С‚СЊ С„Р°Р№Р» matches.txt\n";
         return;
     }
 
@@ -490,14 +490,14 @@ void League::saveMatchesToFile() {
     }
 
     file.close();
-    std::cout << "Матчи сохранены в файл matches.txt\n";
+    std::cout << "РњР°С‚С‡Рё СЃРѕС…СЂР°РЅРµРЅС‹ РІ С„Р°Р№Р» matches.txt\n";
 }
 
-// Загрузка матчей
+// Р—Р°РіСЂСѓР·РєР° РјР°С‚С‡РµР№
 void League::loadMatchesFromFile() {
     std::ifstream file("matches.txt");
     if (!file.is_open()) {
-        std::cout << "Файл matches.txt не найден. Будет создан новый.\n";
+        std::cout << "Р¤Р°Р№Р» matches.txt РЅРµ РЅР°Р№РґРµРЅ. Р‘СѓРґРµС‚ СЃРѕР·РґР°РЅ РЅРѕРІС‹Р№.\n";
         return;
     }
 
@@ -522,14 +522,14 @@ void League::loadMatchesFromFile() {
 
     file.close();
     updateTeamStats();
-    std::cout << "Матчи загружены из файла matches.txt\n";
+    std::cout << "РњР°С‚С‡Рё Р·Р°РіСЂСѓР¶РµРЅС‹ РёР· С„Р°Р№Р»Р° matches.txt\n";
 }
 
-// Сохранение команд
+// РЎРѕС…СЂР°РЅРµРЅРёРµ РєРѕРјР°РЅРґ
 void League::saveTeamsToFile() {
     std::ofstream file("teams.txt");
     if (!file.is_open()) {
-        std::cout << "Ошибка: не удалось создать файл teams.txt\n";
+        std::cout << "РћС€РёР±РєР°: РЅРµ СѓРґР°Р»РѕСЃСЊ СЃРѕР·РґР°С‚СЊ С„Р°Р№Р» teams.txt\n";
         return;
     }
 
@@ -544,14 +544,14 @@ void League::saveTeamsToFile() {
     }
 
     file.close();
-    std::cout << "Команды сохранены в файл teams.txt\n";
+    std::cout << "РљРѕРјР°РЅРґС‹ СЃРѕС…СЂР°РЅРµРЅС‹ РІ С„Р°Р№Р» teams.txt\n";
 }
 
-// Загрузка команд
+// Р—Р°РіСЂСѓР·РєР° РєРѕРјР°РЅРґ
 void League::loadTeamsFromFile() {
     std::ifstream file("teams.txt");
     if (!file.is_open()) {
-        std::cout << "Файл teams.txt не найден. Будет создан новый.\n";
+        std::cout << "Р¤Р°Р№Р» teams.txt РЅРµ РЅР°Р№РґРµРЅ. Р‘СѓРґРµС‚ СЃРѕР·РґР°РЅ РЅРѕРІС‹Р№.\n";
         return;
     }
 
@@ -581,5 +581,5 @@ void League::loadTeamsFromFile() {
     }
 
     file.close();
-    std::cout << "Команды загружены из файла teams.txt\n";
+    std::cout << "РљРѕРјР°РЅРґС‹ Р·Р°РіСЂСѓР¶РµРЅС‹ РёР· С„Р°Р№Р»Р° teams.txt\n";
 }

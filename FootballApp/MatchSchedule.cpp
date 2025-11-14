@@ -1,16 +1,16 @@
-#include "MatchSchedule.hpp"
+п»ї#include "MatchSchedule.hpp"
 #include <iostream>
 #include <algorithm>
 
-// Конструктор инициализирует следующий ID матча
+// РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РёРЅРёС†РёР°Р»РёР·РёСЂСѓРµС‚ СЃР»РµРґСѓСЋС‰РёР№ ID РјР°С‚С‡Р°
 MatchSchedule::MatchSchedule() : nextMatchId(1) {}
 
-// Добавляет новый матч в расписание
+// Р”РѕР±Р°РІР»СЏРµС‚ РЅРѕРІС‹Р№ РјР°С‚С‡ РІ СЂР°СЃРїРёСЃР°РЅРёРµ
 void MatchSchedule::addMatch(int homeTeamId, int awayTeamId, int matchDay) {
     matches.push_back(Match(nextMatchId++, homeTeamId, awayTeamId, matchDay));
 }
 
-// Удаляет матч из расписания по ID
+// РЈРґР°Р»СЏРµС‚ РјР°С‚С‡ РёР· СЂР°СЃРїРёСЃР°РЅРёСЏ РїРѕ ID
 bool MatchSchedule::removeMatch(int matchId) {
     auto it = std::remove_if(matches.begin(), matches.end(),
         [matchId](const Match& match) { return match.getId() == matchId; });
@@ -22,7 +22,7 @@ bool MatchSchedule::removeMatch(int matchId) {
     return false;
 }
 
-// Находит матч по его ID
+// РќР°С…РѕРґРёС‚ РјР°С‚С‡ РїРѕ РµРіРѕ ID
 Match* MatchSchedule::findMatch(int matchId) {
     for (auto& match : matches) {
         if (match.getId() == matchId) {
@@ -32,7 +32,7 @@ Match* MatchSchedule::findMatch(int matchId) {
     return nullptr;
 }
 
-// Возвращает все матчи указанной команды
+// Р’РѕР·РІСЂР°С‰Р°РµС‚ РІСЃРµ РјР°С‚С‡Рё СѓРєР°Р·Р°РЅРЅРѕР№ РєРѕРјР°РЅРґС‹
 std::vector<Match*> MatchSchedule::getMatchesByTeam(int teamId) {
     std::vector<Match*> teamMatches;
     for (auto& match : matches) {
@@ -41,7 +41,7 @@ std::vector<Match*> MatchSchedule::getMatchesByTeam(int teamId) {
         }
     }
 
-    // Сортируем матчи по возрастанию номера тура
+    // РЎРѕСЂС‚РёСЂСѓРµРј РјР°С‚С‡Рё РїРѕ РІРѕР·СЂР°СЃС‚Р°РЅРёСЋ РЅРѕРјРµСЂР° С‚СѓСЂР°
     std::sort(teamMatches.begin(), teamMatches.end(),
         [](Match* a, Match* b) {
             return a->getMatchDay() < b->getMatchDay();
@@ -50,7 +50,7 @@ std::vector<Match*> MatchSchedule::getMatchesByTeam(int teamId) {
     return teamMatches;
 }
 
-// Возвращает матчи указанного дня
+// Р’РѕР·РІСЂР°С‰Р°РµС‚ РјР°С‚С‡Рё СѓРєР°Р·Р°РЅРЅРѕРіРѕ РґРЅСЏ
 std::vector<Match*> MatchSchedule::getMatchesByDay(int matchDay) {
     std::vector<Match*> dayMatches;
     for (auto& match : matches) {
@@ -61,23 +61,23 @@ std::vector<Match*> MatchSchedule::getMatchesByDay(int matchDay) {
     return dayMatches;
 }
 
-// Возвращает матчи по указанному фильтру
+// Р’РѕР·РІСЂР°С‰Р°РµС‚ РјР°С‚С‡Рё РїРѕ СѓРєР°Р·Р°РЅРЅРѕРјСѓ С„РёР»СЊС‚СЂСѓ
 std::vector<Match*> MatchSchedule::getMatchesByFilter(int filter) {
     std::vector<Match*> filteredMatches;
 
     for (auto& match : matches) {
         if (filter == FILTER_ALL) {
-            filteredMatches.push_back(&match);  // Все матчи
+            filteredMatches.push_back(&match);  // Р’СЃРµ РјР°С‚С‡Рё
         }
         else if (filter == FILTER_UPCOMING && match.getStatus() == MATCH_SCHEDULED) {
-            filteredMatches.push_back(&match);  // Только запланированные
+            filteredMatches.push_back(&match);  // РўРѕР»СЊРєРѕ Р·Р°РїР»Р°РЅРёСЂРѕРІР°РЅРЅС‹Рµ
         }
         else if (filter == FILTER_PLAYED && match.getStatus() == MATCH_PLAYED) {
-            filteredMatches.push_back(&match);  // Только сыгранные
+            filteredMatches.push_back(&match);  // РўРѕР»СЊРєРѕ СЃС‹РіСЂР°РЅРЅС‹Рµ
         }
     }
 
-    // Сортируем по возрастанию номера тура
+    // РЎРѕСЂС‚РёСЂСѓРµРј РїРѕ РІРѕР·СЂР°СЃС‚Р°РЅРёСЋ РЅРѕРјРµСЂР° С‚СѓСЂР°
     std::sort(filteredMatches.begin(), filteredMatches.end(),
         [](Match* a, Match* b) {
             return a->getMatchDay() < b->getMatchDay();
@@ -86,14 +86,14 @@ std::vector<Match*> MatchSchedule::getMatchesByFilter(int filter) {
     return filteredMatches;
 }
 
-// Возвращает все матчи расписания
+// Р’РѕР·РІСЂР°С‰Р°РµС‚ РІСЃРµ РјР°С‚С‡Рё СЂР°СЃРїРёСЃР°РЅРёСЏ
 std::vector<Match*> MatchSchedule::getAllMatches() {
     std::vector<Match*> allMatches;
     for (auto& match : matches) {
         allMatches.push_back(&match);
     }
 
-    // Сортируем по возрастанию номера тура
+    // РЎРѕСЂС‚РёСЂСѓРµРј РїРѕ РІРѕР·СЂР°СЃС‚Р°РЅРёСЋ РЅРѕРјРµСЂР° С‚СѓСЂР°
     std::sort(allMatches.begin(), allMatches.end(),
         [](Match* a, Match* b) {
             return a->getMatchDay() < b->getMatchDay();
@@ -102,33 +102,33 @@ std::vector<Match*> MatchSchedule::getAllMatches() {
     return allMatches;
 }
 
-// Отображает полное расписание матчей
+// РћС‚РѕР±СЂР°Р¶Р°РµС‚ РїРѕР»РЅРѕРµ СЂР°СЃРїРёСЃР°РЅРёРµ РјР°С‚С‡РµР№
 void MatchSchedule::displaySchedule() const {
     if (matches.empty()) {
-        std::cout << "Расписание матчей пусто.\n";
+        std::cout << "Р Р°СЃРїРёСЃР°РЅРёРµ РјР°С‚С‡РµР№ РїСѓСЃС‚Рѕ.\n";
         return;
     }
 
-    std::cout << "\n=== ПОЛНОЕ РАСПИСАНИЕ МАТЧЕЙ ===\n";
-    std::cout << "Всего матчей: " << matches.size() << "\n";
+    std::cout << "\n=== РџРћР›РќРћР• Р РђРЎРџРРЎРђРќРР• РњРђРўР§Р•Р™ ===\n";
+    std::cout << "Р’СЃРµРіРѕ РјР°С‚С‡РµР№: " << matches.size() << "\n";
     std::cout << "----------------------------------------\n";
 
-    // Выводим информацию о каждом матче
+    // Р’С‹РІРѕРґРёРј РёРЅС„РѕСЂРјР°С†РёСЋ Рѕ РєР°Р¶РґРѕРј РјР°С‚С‡Рµ
     for (const auto& match : matches) {
         std::string status;
         if (match.getStatus() == MATCH_SCHEDULED) {
-            status = "Запланирован";
+            status = "Р—Р°РїР»Р°РЅРёСЂРѕРІР°РЅ";
         }
         else if (match.getStatus() == MATCH_PLAYED) {
-            status = "Сыгран";
+            status = "РЎС‹РіСЂР°РЅ";
         }
         else if (match.getStatus() == MATCH_POSTPONED) {
-            status = "Перенесен";
+            status = "РџРµСЂРµРЅРµСЃРµРЅ";
         }
 
-        std::cout << "Тур " << match.getMatchDay() << ": "
-            << "Команда " << match.getHomeTeamId() << " vs "
-            << "Команда " << match.getAwayTeamId();
+        std::cout << "РўСѓСЂ " << match.getMatchDay() << ": "
+            << "РљРѕРјР°РЅРґР° " << match.getHomeTeamId() << " vs "
+            << "РљРѕРјР°РЅРґР° " << match.getAwayTeamId();
 
         if (match.getStatus() == MATCH_PLAYED) {
             std::cout << " - " << match.getResult();
@@ -139,9 +139,9 @@ void MatchSchedule::displaySchedule() const {
     std::cout << "----------------------------------------\n";
 }
 
-// Отображает расписание конкретной команды
+// РћС‚РѕР±СЂР°Р¶Р°РµС‚ СЂР°СЃРїРёСЃР°РЅРёРµ РєРѕРЅРєСЂРµС‚РЅРѕР№ РєРѕРјР°РЅРґС‹
 void MatchSchedule::displayTeamSchedule(int teamId) const {
-    // Собираем матчи команды
+    // РЎРѕР±РёСЂР°РµРј РјР°С‚С‡Рё РєРѕРјР°РЅРґС‹
     std::vector<const Match*> teamMatches;
     for (const auto& match : matches) {
         if (match.involvesTeam(teamId)) {
@@ -150,33 +150,33 @@ void MatchSchedule::displayTeamSchedule(int teamId) const {
     }
 
     if (teamMatches.empty()) {
-        std::cout << "Для команды " << teamId << " матчей не найдено.\n";
+        std::cout << "Р”Р»СЏ РєРѕРјР°РЅРґС‹ " << teamId << " РјР°С‚С‡РµР№ РЅРµ РЅР°Р№РґРµРЅРѕ.\n";
         return;
     }
 
-    std::cout << "\n=== РАСПИСАНИЕ КОМАНДЫ " << teamId << " ===\n";
-    std::cout << "Всего матчей: " << teamMatches.size() << "\n";
+    std::cout << "\n=== Р РђРЎРџРРЎРђРќРР• РљРћРњРђРќР”Р« " << teamId << " ===\n";
+    std::cout << "Р’СЃРµРіРѕ РјР°С‚С‡РµР№: " << teamMatches.size() << "\n";
     std::cout << "----------------------------------------\n";
 
-    // Выводим информацию о каждом матче команды
+    // Р’С‹РІРѕРґРёРј РёРЅС„РѕСЂРјР°С†РёСЋ Рѕ РєР°Р¶РґРѕРј РјР°С‚С‡Рµ РєРѕРјР°РЅРґС‹
     for (const auto& match : teamMatches) {
         std::string status;
         if (match->getStatus() == MATCH_SCHEDULED) {
-            status = "Запланирован";
+            status = "Р—Р°РїР»Р°РЅРёСЂРѕРІР°РЅ";
         }
         else if (match->getStatus() == MATCH_PLAYED) {
-            status = "Сыгран";
+            status = "РЎС‹РіСЂР°РЅ";
         }
         else if (match->getStatus() == MATCH_POSTPONED) {
-            status = "Перенесен";
+            status = "РџРµСЂРµРЅРµСЃРµРЅ";
         }
 
-        // Определяем роль команды в матче (дома или в гостях)
-        std::string role = (match->getHomeTeamId() == teamId) ? "Дома" : "В гостях";
+        // РћРїСЂРµРґРµР»СЏРµРј СЂРѕР»СЊ РєРѕРјР°РЅРґС‹ РІ РјР°С‚С‡Рµ (РґРѕРјР° РёР»Рё РІ РіРѕСЃС‚СЏС…)
+        std::string role = (match->getHomeTeamId() == teamId) ? "Р”РѕРјР°" : "Р’ РіРѕСЃС‚СЏС…";
         int opponentId = (match->getHomeTeamId() == teamId) ? match->getAwayTeamId() : match->getHomeTeamId();
 
-        std::cout << "Тур " << match->getMatchDay() << ": "
-            << role << " против команды " << opponentId;
+        std::cout << "РўСѓСЂ " << match->getMatchDay() << ": "
+            << role << " РїСЂРѕС‚РёРІ РєРѕРјР°РЅРґС‹ " << opponentId;
 
         if (match->getStatus() == MATCH_PLAYED) {
             std::cout << " - " << match->getResult();

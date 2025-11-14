@@ -1,51 +1,51 @@
-#include "Match.hpp"
+п»ї#include "Match.hpp"
 #include <iostream>
 #include <sstream>
 
-// Конструктор матча инициализирует все поля
-// Матч создается запланированным с нулевым счетом
+// РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РјР°С‚С‡Р° РёРЅРёС†РёР°Р»РёР·РёСЂСѓРµС‚ РІСЃРµ РїРѕР»СЏ
+// РњР°С‚С‡ СЃРѕР·РґР°РµС‚СЃСЏ Р·Р°РїР»Р°РЅРёСЂРѕРІР°РЅРЅС‹Рј СЃ РЅСѓР»РµРІС‹Рј СЃС‡РµС‚РѕРј
 Match::Match(int matchId, int homeId, int awayId, int day)
-    : DataEntity(matchId, "Match " + std::to_string(matchId)), // Базовый конструктор
-    homeTeamId(homeId), awayTeamId(awayId),                 // ID команд
-    homeScore(0), awayScore(0),                             // Счет обнулен
-    status(MATCH_SCHEDULED),                                // Статус - запланирован
-    matchDay(day) {                                         // Номер тура
+    : DataEntity(matchId, "Match " + std::to_string(matchId)), // Р‘Р°Р·РѕРІС‹Р№ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ
+    homeTeamId(homeId), awayTeamId(awayId),                 // ID РєРѕРјР°РЅРґ
+    homeScore(0), awayScore(0),                             // РЎС‡РµС‚ РѕР±РЅСѓР»РµРЅ
+    status(MATCH_SCHEDULED),                                // РЎС‚Р°С‚СѓСЃ - Р·Р°РїР»Р°РЅРёСЂРѕРІР°РЅ
+    matchDay(day) {                                         // РќРѕРјРµСЂ С‚СѓСЂР°
 }
 
-// Отмечает матч как сыгранный с указанным счетом
+// РћС‚РјРµС‡Р°РµС‚ РјР°С‚С‡ РєР°Рє СЃС‹РіСЂР°РЅРЅС‹Р№ СЃ СѓРєР°Р·Р°РЅРЅС‹Рј СЃС‡РµС‚РѕРј
 void Match::playMatch(int homeGoals, int awayGoals) {
-    homeScore = homeGoals;         // Устанавливает голы домашней команды
-    awayScore = awayGoals;         // Устанавливает голы гостевой команды
-    status = MATCH_PLAYED;         // Меняет статус на "сыгран"
+    homeScore = homeGoals;         // РЈСЃС‚Р°РЅР°РІР»РёРІР°РµС‚ РіРѕР»С‹ РґРѕРјР°С€РЅРµР№ РєРѕРјР°РЅРґС‹
+    awayScore = awayGoals;         // РЈСЃС‚Р°РЅР°РІР»РёРІР°РµС‚ РіРѕР»С‹ РіРѕСЃС‚РµРІРѕР№ РєРѕРјР°РЅРґС‹
+    status = MATCH_PLAYED;         // РњРµРЅСЏРµС‚ СЃС‚Р°С‚СѓСЃ РЅР° "СЃС‹РіСЂР°РЅ"
 }
 
-// Переносит матч на другое время
+// РџРµСЂРµРЅРѕСЃРёС‚ РјР°С‚С‡ РЅР° РґСЂСѓРіРѕРµ РІСЂРµРјСЏ
 void Match::postponeMatch() {
-    status = MATCH_POSTPONED;      // Меняет статус на "перенесен"
+    status = MATCH_POSTPONED;      // РњРµРЅСЏРµС‚ СЃС‚Р°С‚СѓСЃ РЅР° "РїРµСЂРµРЅРµСЃРµРЅ"
 }
 
-// Геттер для ID домашней команды
+// Р“РµС‚С‚РµСЂ РґР»СЏ ID РґРѕРјР°С€РЅРµР№ РєРѕРјР°РЅРґС‹
 int Match::getHomeTeamId() const {
     return homeTeamId;
 }
 
-// Геттер для ID гостевой команды
+// Р“РµС‚С‚РµСЂ РґР»СЏ ID РіРѕСЃС‚РµРІРѕР№ РєРѕРјР°РЅРґС‹
 int Match::getAwayTeamId() const {
     return awayTeamId;
 }
 
-// Геттер для голов домашней команды
+// Р“РµС‚С‚РµСЂ РґР»СЏ РіРѕР»РѕРІ РґРѕРјР°С€РЅРµР№ РєРѕРјР°РЅРґС‹
 int Match::getHomeScore() const {
     return homeScore;
 }
 
-// Геттер для голов гостевой команды
+// Р“РµС‚С‚РµСЂ РґР»СЏ РіРѕР»РѕРІ РіРѕСЃС‚РµРІРѕР№ РєРѕРјР°РЅРґС‹
 int Match::getAwayScore() const {
     return awayScore;
 }
 
-// Возвращает результат матча в виде строки
-// Если матч не сыгран, возвращает " - : - "
+// Р’РѕР·РІСЂР°С‰Р°РµС‚ СЂРµР·СѓР»СЊС‚Р°С‚ РјР°С‚С‡Р° РІ РІРёРґРµ СЃС‚СЂРѕРєРё
+// Р•СЃР»Рё РјР°С‚С‡ РЅРµ СЃС‹РіСЂР°РЅ, РІРѕР·РІСЂР°С‰Р°РµС‚ " - : - "
 std::string Match::getResult() const {
     if (status != MATCH_PLAYED) {
         return " - : - ";
@@ -55,23 +55,23 @@ std::string Match::getResult() const {
     return ss.str();
 }
 
-// Геттер для статуса матча
+// Р“РµС‚С‚РµСЂ РґР»СЏ СЃС‚Р°С‚СѓСЃР° РјР°С‚С‡Р°
 int Match::getStatus() const {
     return status;
 }
 
-// Геттер для номера тура
+// Р“РµС‚С‚РµСЂ РґР»СЏ РЅРѕРјРµСЂР° С‚СѓСЂР°
 int Match::getMatchDay() const {
     return matchDay;
 }
 
-// Проверяет, участвует ли указанная команда в матче
+// РџСЂРѕРІРµСЂСЏРµС‚, СѓС‡Р°СЃС‚РІСѓРµС‚ Р»Рё СѓРєР°Р·Р°РЅРЅР°СЏ РєРѕРјР°РЅРґР° РІ РјР°С‚С‡Рµ
 bool Match::involvesTeam(int teamId) const {
     return homeTeamId == teamId || awayTeamId == teamId;
 }
 
-// Выводит основную информацию о матче
+// Р’С‹РІРѕРґРёС‚ РѕСЃРЅРѕРІРЅСѓСЋ РёРЅС„РѕСЂРјР°С†РёСЋ Рѕ РјР°С‚С‡Рµ
 void Match::displayInfo() const {
-    std::cout << "Матч " << id << ": Тур " << matchDay << " - "
+    std::cout << "РњР°С‚С‡ " << id << ": РўСѓСЂ " << matchDay << " - "
         << getResult() << "\n";
 }

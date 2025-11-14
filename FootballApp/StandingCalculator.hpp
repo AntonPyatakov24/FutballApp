@@ -1,34 +1,34 @@
-#ifndef STANDINGSCALCULATOR_HPP
+п»ї#ifndef STANDINGSCALCULATOR_HPP
 #define STANDINGSCALCULATOR_HPP
 
 #include "Team.hpp"
 #include <vector>
 #include <algorithm>
 
-// Класс для расчета и отображения турнирной таблицы
-// Альтернативная реализация для демонстрации разных подходов
+// РљР»Р°СЃСЃ РґР»СЏ СЂР°СЃС‡РµС‚Р° Рё РѕС‚РѕР±СЂР°Р¶РµРЅРёСЏ С‚СѓСЂРЅРёСЂРЅРѕР№ С‚Р°Р±Р»РёС†С‹
+// РђР»СЊС‚РµСЂРЅР°С‚РёРІРЅР°СЏ СЂРµР°Р»РёР·Р°С†РёСЏ РґР»СЏ РґРµРјРѕРЅСЃС‚СЂР°С†РёРё СЂР°Р·РЅС‹С… РїРѕРґС…РѕРґРѕРІ
 class StandingCalculator {
 public:
-    using StandingsType = std::vector<Team*>;  // Псевдоним для вектора команд
+    using StandingsType = std::vector<Team*>;  // РџСЃРµРІРґРѕРЅРёРј РґР»СЏ РІРµРєС‚РѕСЂР° РєРѕРјР°РЅРґ
 
-    // Критерии сортировки таблицы
-    const int SORT_POINTS = 0;        // Сортировка по очкам
-    const int SORT_GOAL_DIFFERENCE = 1; // Сортировка по разнице голов
-    const int SORT_GOALS_FOR = 2;     // Сортировка по забитым голам
+    // РљСЂРёС‚РµСЂРёРё СЃРѕСЂС‚РёСЂРѕРІРєРё С‚Р°Р±Р»РёС†С‹
+    const int SORT_POINTS = 0;        // РЎРѕСЂС‚РёСЂРѕРІРєР° РїРѕ РѕС‡РєР°Рј
+    const int SORT_GOAL_DIFFERENCE = 1; // РЎРѕСЂС‚РёСЂРѕРІРєР° РїРѕ СЂР°Р·РЅРёС†Рµ РіРѕР»РѕРІ
+    const int SORT_GOALS_FOR = 2;     // РЎРѕСЂС‚РёСЂРѕРІРєР° РїРѕ Р·Р°Р±РёС‚С‹Рј РіРѕР»Р°Рј
 
 private:
-    StandingsType teams;  // Вектор команд для расчета
+    StandingsType teams;  // Р’РµРєС‚РѕСЂ РєРѕРјР°РЅРґ РґР»СЏ СЂР°СЃС‡РµС‚Р°
 
 public:
     StandingCalculator();
 
-    // Устанавливает команды для расчета
+    // РЈСЃС‚Р°РЅР°РІР»РёРІР°РµС‚ РєРѕРјР°РЅРґС‹ РґР»СЏ СЂР°СЃС‡РµС‚Р°
     void setTeams(const StandingsType& teamList);
 
-    // Рассчитывает таблицу по указанному критерию
+    // Р Р°СЃСЃС‡РёС‚С‹РІР°РµС‚ С‚Р°Р±Р»РёС†Сѓ РїРѕ СѓРєР°Р·Р°РЅРЅРѕРјСѓ РєСЂРёС‚РµСЂРёСЋ
     StandingsType calculateStandings(int criteria = 0);
 
-    // Отображает таблицу в консоли
+    // РћС‚РѕР±СЂР°Р¶Р°РµС‚ С‚Р°Р±Р»РёС†Сѓ РІ РєРѕРЅСЃРѕР»Рё
     void displayStandings(const StandingsType& standings) const;
 };
 

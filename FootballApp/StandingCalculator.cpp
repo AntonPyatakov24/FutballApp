@@ -1,33 +1,33 @@
-#include "StandingCalculator.hpp"
+п»ї#include "StandingCalculator.hpp"
 #include <iostream>
 
-// Конструктор по умолчанию
+// РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ
 StandingCalculator::StandingCalculator() {}
 
-// Устанавливает команды для расчета таблицы
+// РЈСЃС‚Р°РЅР°РІР»РёРІР°РµС‚ РєРѕРјР°РЅРґС‹ РґР»СЏ СЂР°СЃС‡РµС‚Р° С‚Р°Р±Р»РёС†С‹
 void StandingCalculator::setTeams(const StandingsType& teamList) {
     teams = teamList;
 }
 
-// Рассчитывает турнирную таблицу по указанному критерию
+// Р Р°СЃСЃС‡РёС‚С‹РІР°РµС‚ С‚СѓСЂРЅРёСЂРЅСѓСЋ С‚Р°Р±Р»РёС†Сѓ РїРѕ СѓРєР°Р·Р°РЅРЅРѕРјСѓ РєСЂРёС‚РµСЂРёСЋ
 StandingCalculator::StandingsType StandingCalculator::calculateStandings(int criteria) {
-    StandingsType sortedTeams = teams;  // Копируем команды для сортировки
+    StandingsType sortedTeams = teams;  // РљРѕРїРёСЂСѓРµРј РєРѕРјР°РЅРґС‹ РґР»СЏ СЃРѕСЂС‚РёСЂРѕРІРєРё
 
     switch (criteria) {
-    case 0: // Сортировка по очкам (основной критерий)
+    case 0: // РЎРѕСЂС‚РёСЂРѕРІРєР° РїРѕ РѕС‡РєР°Рј (РѕСЃРЅРѕРІРЅРѕР№ РєСЂРёС‚РµСЂРёР№)
         std::sort(sortedTeams.begin(), sortedTeams.end(),
             [](Team* a, Team* b) {
                 if (a->getPoints() != b->getPoints()) {
-                    return a->getPoints() > b->getPoints();  // По убыванию очков
+                    return a->getPoints() > b->getPoints();  // РџРѕ СѓР±С‹РІР°РЅРёСЋ РѕС‡РєРѕРІ
                 }
                 if (a->getGoalDifference() != b->getGoalDifference()) {
-                    return a->getGoalDifference() > b->getGoalDifference(); // По разнице голов
+                    return a->getGoalDifference() > b->getGoalDifference(); // РџРѕ СЂР°Р·РЅРёС†Рµ РіРѕР»РѕРІ
                 }
-                return a->getGoalsFor() > b->getGoalsFor(); // По забитым голам
+                return a->getGoalsFor() > b->getGoalsFor(); // РџРѕ Р·Р°Р±РёС‚С‹Рј РіРѕР»Р°Рј
             });
         break;
 
-    case 1: // Сортировка по разнице голов
+    case 1: // РЎРѕСЂС‚РёСЂРѕРІРєР° РїРѕ СЂР°Р·РЅРёС†Рµ РіРѕР»РѕРІ
         std::sort(sortedTeams.begin(), sortedTeams.end(),
             [](Team* a, Team* b) {
                 if (a->getGoalDifference() != b->getGoalDifference()) {
@@ -40,7 +40,7 @@ StandingCalculator::StandingsType StandingCalculator::calculateStandings(int cri
             });
         break;
 
-    case 2: // Сортировка по забитым голам
+    case 2: // РЎРѕСЂС‚РёСЂРѕРІРєР° РїРѕ Р·Р°Р±РёС‚С‹Рј РіРѕР»Р°Рј
         std::sort(sortedTeams.begin(), sortedTeams.end(),
             [](Team* a, Team* b) {
                 if (a->getGoalsFor() != b->getGoalsFor()) {
@@ -57,19 +57,19 @@ StandingCalculator::StandingsType StandingCalculator::calculateStandings(int cri
     return sortedTeams;
 }
 
-// Отображает турнирную таблицу в форматированном виде
+// РћС‚РѕР±СЂР°Р¶Р°РµС‚ С‚СѓСЂРЅРёСЂРЅСѓСЋ С‚Р°Р±Р»РёС†Сѓ РІ С„РѕСЂРјР°С‚РёСЂРѕРІР°РЅРЅРѕРј РІРёРґРµ
 void StandingCalculator::displayStandings(const StandingsType& standings) const {
     if (standings.empty()) {
-        std::cout << "Таблица пуста.\n";
+        std::cout << "РўР°Р±Р»РёС†Р° РїСѓСЃС‚Р°.\n";
         return;
     }
 
-    std::cout << "\n=== ТУРНИРНАЯ ТАБЛИЦА ===\n";
+    std::cout << "\n=== РўРЈР РќРР РќРђРЇ РўРђР‘Р›РР¦Рђ ===\n";
     std::cout << "------------------------------------------------------------\n";
-    std::cout << "Поз. Команда            И   В   Н   П   ГЗ   ГП   РМ   О\n";
+    std::cout << "РџРѕР·. РљРѕРјР°РЅРґР°            Р   Р’   Рќ   Рџ   Р“Р—   Р“Рџ   Р Рњ   Рћ\n";
     std::cout << "------------------------------------------------------------\n";
 
-    // ИСПРАВЛЕНИЕ: отображаем только существующие команды
+    // РРЎРџР РђР’Р›Р•РќРР•: РѕС‚РѕР±СЂР°Р¶Р°РµРј С‚РѕР»СЊРєРѕ СЃСѓС‰РµСЃС‚РІСѓСЋС‰РёРµ РєРѕРјР°РЅРґС‹
     for (size_t i = 0; i < standings.size(); ++i) {
         Team* team = standings[i];
         printf("%-4zu %-17s %-3d %-3d %-3d %-3d %-4d %-4d %-4d %-3d\n",
